@@ -19,10 +19,10 @@
 			$('#sidebar_scroller').stickUp();
 			
 			//遍历文章里每个h标签
-			$('#cnblogs_post_body :header').each(function() {
+			$('#cnblogs_post_body :header').each(function(i) {
 				var $h = $(this);
 				//设置h标签的id, 编号从0开始
-				$h.attr('id', 'scroller-' + $h.index());
+				$h.attr('id', 'scroller-' + i);
 				//比上一个h标签层级小, 级数加1
 				if($h[0].tagName > $ph[0].tagName) {
 					$h.attr('offset', parseInt($ph.attr('offset')) + 1);
@@ -35,7 +35,7 @@
 					$h.attr('offset', $ph.attr('offset'));
 				}
 				//添加h标签的目录内容
-				$('#sidebar_scroller ul').append('<li class="scroller-offset' + $h.attr('offset') + '"><a href="#scroller-' + $h.index() + '">' + $h.text() + '</a></li>');
+				$('#sidebar_scroller ul').append('<li class="scroller-offset' + $h.attr('offset') + '"><a href="#scroller-' + i + '">' + $h.text() + '</a></li>');
 				//最后设置自己为上一个h标签
 				$ph = $h;
 			});
