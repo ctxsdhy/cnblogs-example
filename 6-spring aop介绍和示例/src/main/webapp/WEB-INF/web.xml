@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	
+	<!-- 配置文件 -->
+	<context-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <!-- 配置文件命名统一用spring-context开头 -->
+	    <param-value>classpath*:/spring-context*.xml</param-value>
+	</context-param>
+	
+	<!-- spring监听器(在容器启动时自动装配配置文件) -->
+	<listener>
+	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- hibernate session过滤器 -->
+	<filter>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 字符集过滤器 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	 </filter>
+	 <filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- spring核心 -->
+	<servlet>
+    	<servlet-name>springMvc</servlet-name>
+    	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    	<init-param>
+        	<param-name>contextConfigLocation</param-name>
+        	<!-- spring mvc配置文件(classpath*:在目录所有文件里搜索) -->
+        	<param-value>classpath*:/spring-mvc.xml</param-value>
+    	</init-param>
+    	<!-- 在容器启动时以最高的优先级加载当前servlet -->
+    	<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+    	<servlet-name>springMvc</servlet-name>
+    	<!-- 拦截所有url(也可以写*.do,只拦截.do结尾的url) -->
+    	<url-pattern>/</url-pattern>
+	</servlet-mapping>
+</web-app>
