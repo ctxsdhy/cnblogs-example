@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="defaultCache">
+	<!--默认的缓存配置（可以给每个实体类指定一个对应的缓存，如果没有匹配到该类，则使用这个默认的缓存配置）-->
+	<defaultCache 
+		maxEntriesLocalHeap="10000"
+		maxEntriesLocalDisk="100000"
+		overflowToDisk="true"
+		eternal="false"
+		timeToIdleSeconds="300"
+		timeToLiveSeconds="600"
+	/>
+	
+	<!-- <cache name="org.xs.techblog.modules.blog.entity.Daily" maxEntriesLocalHeap="1000" eternal="false" /> -->
+	
+	<!-- 指定缓存存放在磁盘上的位置 -->
+	<diskStore path="java.io.tmpdir/demo1/ehcache/hibernate" />
+</ehcache>
