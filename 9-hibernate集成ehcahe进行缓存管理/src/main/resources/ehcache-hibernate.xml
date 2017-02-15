@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false">
+	<!-- Cache配置项说明
+		必须项
+		name······························································非默认Cache配置的名称，唯一的
+		maxEntriesLocalHeap······························在内存中缓存的最大对象数（默认值为0，表示不限制）
+		maxEntriesLocalDisk································在磁盘中缓存的最大对象数（默认值为0，表示不限制）
+		overflowToDisk···········································如果对象数量超过内存中最大的数，是否将其保存到磁盘中
+		eternal····························································缓存是否永远不过期（如果为false，还需要根据timeToIdleSeconds、timeToLiveSeconds判断）
+		timeToIdleSeconds···································对象的空闲时间（默认值为0秒，表示一直可以访问）
+		timeToLiveSeconds··································对象的存活时间（默认值为0秒，表示一直可以访问）
+														           1、如果仅设置了timeToLiveSeconds，则该对象的超时时间=创建时间+timeToLiveSeconds，假设为A；
+															       2、如果没设置timeToLiveSeconds，则该对象的超时时间=max(创建时间，最近访问时间)+timeToIdleSeconds，假设为B；
+			                                                       3、如果两者都设置了，则取出A、B最少的值，即min(A,B)，表示只要有一个超时成立即算超时。			                                                       
+		可选项
+		maxBytesLocalHeap·································在内存中缓存的最大字节数（与maxEntriesLocalHeap属性不能同时指定，值可以加单位（K、M、G））
+		maxBytesLocalDisk···································在磁盘中缓存的最大字节数（与maxEntriesLocalDisk属性不能同时指定，值可以加单位（CacheManager指定后可以加百分比）
+		                                                           指定后会隐式让当前cache的overflowToDisk为true）
+		diskExpiryThreadIntervalSeconds·······清理保存在磁盘上的过期缓存项目线程的启动时间间隔（默认值为120秒）
+		diskSpoolBufferSizeMB···························写入磁盘的缓冲区大小（默认为30MB，如果遇到OutOfMemory可以减小这个值）
+		clearOnFlush················································Cache的flush()方法调用时，是否清空MemoryStore（默认为true）
+		statistics·························································是否收集统计信息（默认为false，如果要监控缓存使用情况就开启，会影响性能）
+		memoryStoreEvictionPolicy···················当内存中缓存的对象数或字节数达到设定的上限时，如果overflowToDisk=false，就采用淘汰策略替换对象（默认为LRU，可选FIFO、LFU）
+		                                                            1、FIFO（first in first out 先进先出）：淘汰最先进入的数据
+		                                                            2、LFU（Less Frequently Used 最少使用）：淘汰最长时间没有被访问的数据
+		                                                            3、LRU（Least Recently Used 最近最少使用）：淘汰一段时间内使用次数最少的数据
+		copyOnRead·················································当缓存被读出时，是否返回一份它的拷贝（默认为false）
+		copyOnWrite················································当缓存被写入时，是否写入一份它的拷贝（默认为false）
+	-->
+	
+	<!--默认的缓存配置（可以给每个实体类指定一个对应的缓存，如果没有匹配到该类，则使用这个默认的缓存配置）-->
+	<defaultCache 
+		maxEntriesLocalHeap="10000"
+		maxEntriesLocalDisk="100000"
+		overflowToDisk="true"
+		eternal="false"
+		timeToIdleSeconds="300"
+		timeToLiveSeconds="600"
+	/>
+	
+	<!-- <cache name="org.xs.techblog.modules.blog.entity.Daily" maxEntriesLocalHeap="1000" eternal="false" /> -->
+	
+	<!-- 指定缓存存放在磁盘上的位置 -->
+	<diskStore path="java.io.tmpdir/demo1/ehcache/hibernate" />
+</ehcache>
