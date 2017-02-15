@@ -8,4 +8,6 @@
 [5-配置hibernate访问mysql](http://www.cnblogs.com/ctxsdhy/p/6375641.html)  
 [6-spring aop介绍和示例](http://www.cnblogs.com/ctxsdhy/p/6375719.html)  
 [7-spring中使用aop配置事务](http://www.cnblogs.com/ctxsdhy/p/6399087.html)  
-[8-spring中集成shiro进行安全管理](http://www.cnblogs.com/ctxsdhy/p/6399121.html)
+[8-spring中集成shiro进行安全管理](http://www.cnblogs.com/ctxsdhy/p/6399121.html)  
+[9-hibernate集成ehcahe进行缓存管理](http://www.cnblogs.com/ctxsdhy/p/6403104.html)  
+[10-spring中ehcache的配置和使用方法](http://www.cnblogs.com/ctxsdhy/p/6403150.html)
