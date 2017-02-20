@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/cache 
+ 		http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+ 		http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+	
+	<description>Ehache Configuration</description>
+	
+	<!-- 使用Annotation自动注册Bean -->
+	<context:component-scan base-package="org.xs.demo1" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+	</context:component-scan>
+	
+	<!-- 开启缓存注解 -->
+	<cache:annotation-driven cache-manager="cacheManager" />
+	
+	<!-- ehcache缓存配置 -->
+	<bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache-context.xml" />
+	</bean>
+	
+	<!-- spring的ehcache缓存配置 -->
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">  
+        <property name="cacheManager" ref="ehcacheManager"></property>  
+    </bean>
+    
+    <!-- ehcache缓存实例 -->
+	<bean id="testCacheInterceptor" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="ehcacheManager"/>
+		<property name="cacheName" value="aopTestDao" />
+	</bean>
+    
+    <!-- 要织入的通知（切面） -->
+    <bean id="testCache" class="org.xs.demo1.CacheInterceptor">
+    	<!-- 传入ehcache缓存实例 -->
+    	<property name="cache" ref="testCacheInterceptor" />
+    </bean>
+    
+    <!-- AOP配置 -->
+    <aop:config>
+        <!-- 定义切面 -->
+        <aop:aspect ref="testCache">
+            <!-- 定义增加缓存的切点 -->
+            <aop:pointcut id="testAddCache" expression="execution(* org.xs.demo1.testDao.get*(..))" />
+            <!-- 定义环绕通知 -->
+            <aop:around pointcut-ref="testAddCache" method="addCache" />
+            <!-- 定义移除缓存的切点 -->
+            <aop:pointcut id="testRemoveCache" expression="execution(* org.xs.demo1.testDao.update*(..)) || execution(* org.xs.demo1.testDao.delete*(..))" />
+            <!-- 定义后置通知 -->
+            <aop:after pointcut-ref="testRemoveCache" method="removeCache" />
+        </aop:aspect>
+    </aop:config>
+</beans>
