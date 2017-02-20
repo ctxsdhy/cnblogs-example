@@ -13,6 +13,6 @@
 [10-spring中ehcache的配置和使用方法](http://www.cnblogs.com/ctxsdhy/p/6403150.html)  
 [11-spring中基于注解使用ehcache](http://www.cnblogs.com/ctxsdhy/p/6420988.html)  
 [12-spring中基于aop使用ehcache](http://www.cnblogs.com/ctxsdhy/p/6421016.html)  
-[13-spring使用ehcache实现页面缓存](http://www.cnblogs.com/ctxsdhy/p/6421032.html)  
-[14-logback配置方法](http://www.cnblogs.com/ctxsdhy/p/6421050.html)  
+[13-spring使用ehcache实现页面缓存](http://www.cnblogs.com/ctxsdhy/p/6421032.html)  
+[14-logback配置方法](http://www.cnblogs.com/ctxsdhy/p/6421050.html)  
 [15-使用spring拦截器实现日志管理](http://www.cnblogs.com/ctxsdhy/p/6421067.html)
